@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 
 
-public class TextureManager : MonoBehaviour
+public class DirtClearManager : MonoBehaviour
 {
     [SerializeField] private Texture2D dirtMaskTextureBase;
     [SerializeField] private Texture2D dirtBrush;
