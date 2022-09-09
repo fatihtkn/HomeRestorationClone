@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResizeCloneTex : MonoBehaviour, IResizeTex
+public class ResizeCloneTex :  IResizeTex
 {
     public Texture2D ResizeTex(out Texture2D cloneTexture,Texture2D textureBase)
     {

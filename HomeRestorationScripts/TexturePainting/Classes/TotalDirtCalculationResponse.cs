@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TotalDirtCalculationResponse : MonoBehaviour, IDirtCalculator
+public class TotalDirtCalculationResponse :  IDirtCalculator
 {
     public float CalculateDirt(Texture2D cloneTextureBase)
     {

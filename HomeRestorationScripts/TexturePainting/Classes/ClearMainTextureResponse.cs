@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ClearMainTextureResponse : MonoBehaviour, IClearTexture
+public class ClearMainTextureResponse :  IClearTexture
 {
     public void ClearMainTexture(Texture2D mainTexture,Texture2D mainTexReference)
     {
