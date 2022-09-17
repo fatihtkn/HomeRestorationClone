@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface ITexturePainter 
 {
-    public void PaintTexture(GameObject tool,Vector3 toolOffset);
+     void PaintTexture(GameObject tool,Vector3 toolOffset);
+     void PaintTexture();
 }

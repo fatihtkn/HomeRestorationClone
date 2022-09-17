@@ -26,7 +26,7 @@ public class SelectRoomDesign : MonoBehaviour
         if(GameManager.state == GameManager.GameStates.SelectingRoomTemplate)
         {
             
-            ToolManager.toolmanagerSc.SetMopActive(false);
+            ToolManager.Instance.SetMopActive(false);
 
             Counter();
 

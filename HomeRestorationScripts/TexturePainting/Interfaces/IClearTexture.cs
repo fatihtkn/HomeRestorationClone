@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IClearTexture
 {
-    public void ClearMainTexture(Texture2D mainTexture,Texture2D mainTexReference);
+     void ClearMainTexture(Texture2D mainTexture,Texture2D mainTexReference);
 }

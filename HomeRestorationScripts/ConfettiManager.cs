@@ -1,32 +1,18 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ConfettiManager : MonoBehaviour
-{
-    [SerializeField]private GameObject confetti_prefab;
-    public static ConfettiManager confettiSc;
-    private bool control;
-    private void Awake()
-    {
-        confettiSc = GetComponent<ConfettiManager>();
-        
-    }
 
+public class ConfettiManager :MonoSingleton<ConfettiManager>
+{
+    [SerializeField]private GameObject confettiPrefab;
+    public  GameObject Confetti => confettiPrefab;
     public  void CreateConfetti()
     {
 
-
-        
-        StartCoroutine(Cooldown());
+        confettiPrefab.SetActive(true);
 
     }
-    private IEnumerator Cooldown()
-    {
-        confetti_prefab.SetActive(true);
-        yield return new WaitForSeconds(3f);
-        confetti_prefab.SetActive(false);
-    }
+   
     
 
 

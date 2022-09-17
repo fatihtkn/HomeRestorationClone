@@ -1,31 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ButtonFunctionsController : MonoBehaviour
+public class ButtonFunctionsManager : MonoSingleton<ButtonFunctionsManager>
 {
     [SerializeField] private GameObject nextLevelButton;
-    public GameObject setToPlasterButton;
-    public GameObject setToWallPaintingButton;
-    public GameObject restartButton;
+    [SerializeField] private GameObject setToPlasterButton;
+    [SerializeField] private GameObject setToWallPaintingButton;
+    [SerializeField] private GameObject restartButton;
+    public GameObject SetToPlasterButton => setToPlasterButton;
+    public GameObject SetToWallPaintingButton => setToWallPaintingButton;
+    public GameObject RestartButton => restartButton;
+
+
+    
+
     private float timer;
-    public static ButtonFunctionsController buttonManager;
-
-
     
-    
-
-
     private void Awake()
     {
 
         timer = 2f;
     }
-    private void Start()
-    {
-        buttonManager = GetComponent<ButtonFunctionsController>();
-    }
+   
     private void Update()
     {
         if (GameManager.state == GameManager.GameStates.Level1Finished)
@@ -38,16 +35,20 @@ public class ButtonFunctionsController : MonoBehaviour
 
     public void NextLevel()
     {
+        
         SceneManager.LoadScene("Level2");
         GameManager.state = GameManager.GameStates.Level2Started;
     }
     public void SetStateToPlaster()
     {
-        PlasterTheCrack.plaster_sc.trowel.SetActive(true);
-        PlasterTheCrack.plaster_sc.GetComponent<MeshCollider>().enabled = true;
+        CrackPlasterManager.Instance.trowel.SetActive(true);
+        CrackPlasterManager.Instance.GetComponent<MeshCollider>().enabled = true;
+
         GameManager.state = GameManager.GameStates.Plastering;
-        ProgressBar.progressbarSc.ResetThepBar();
+        ProgressBar.Instance.ResetThepBar();
+
         setToPlasterButton.SetActive(false);
+        ConfettiManager.Instance.Confetti.SetActive(false);
         
 
     }
@@ -55,15 +56,19 @@ public class ButtonFunctionsController : MonoBehaviour
     {
         
         setToWallPaintingButton.SetActive(false);
-        WallPainting.walpaint_sc.GetComponent<MeshCollider>().enabled = true;
+        WallPaintManager.Instance.GetComponent<MeshCollider>().enabled = true;
+
         GameManager.state = GameManager.GameStates.SelectingColor;
         ImageRaycast.imageRaySc.controlTheRay = true;
-        PlasterTheCrack.plaster_sc.trowel.SetActive(false);
-        PlasterTheCrack.plaster_sc.enabled = false;
-        ColorManagerSc.color_Manager.ColorPalette.SetActive(true);
-        CameraManager.cameraManagerScript.SetCamera3On();
-        ToolManager.toolmanagerSc.SetBrushActive(true);
 
+        CrackPlasterManager.Instance.trowel.SetActive(false);
+        CrackPlasterManager.Instance.enabled = false;
+
+        ColorManagerSc.Instance.ColorPalette.SetActive(true);
+        CameraManager.cameraManagerScript.SetCamera3On();
+
+        ToolManager.Instance.SetBrushActive(true);
+        ConfettiManager.Instance.Confetti.SetActive(false);
 
 
     }
@@ -72,10 +77,5 @@ public class ButtonFunctionsController : MonoBehaviour
         SceneManager.LoadScene("Level1");
         GameManager.state = GameManager.GameStates.Started;
     }
-    IEnumerator Timer()
-    {
-        yield return new WaitForSeconds(1.5f);
-        CameraManager.cameraManagerScript.SetCamera3On();
-        
-    }
+   
 }

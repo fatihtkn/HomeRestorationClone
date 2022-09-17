@@ -1,29 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
-
- public class TotalPaintedAreaController : MonoBehaviour, IAreaController
+ public class TotalPaintedAreaController :IAreaController
  {
-      private bool control;
-     private IOnPainted onPainted;
-     private void Awake()
+    
+     public bool PaintedArea(float percentage,GameManager.GameStates desiredState)
      {
-        control = true;
-        onPainted = GetComponent<IOnPainted>();
-
-
-     }
-     public void PaintedArea(float percentage,GameManager.GameStates desiredState)
-     {
-         if (Mathf.RoundToInt(percentage * 100) >= 89.5f & GameManager.state == desiredState & control)
+        
+         if (Mathf.RoundToInt(percentage * 100) >= 89.5f & GameManager.state == desiredState)
          {
 
-            onPainted.OnPainted();
-             control = false;
-
+            return true;
+            
          }
+        return false;
      }
- }
+
+   
+}
 

@@ -47,14 +47,14 @@ public class StartMenu : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         
-        if (ToolManager.toolmanagerSc.mop != null)
+        if (ToolManager.Instance.mop != null)
         {
             GameManager.state = GameManager.GameStates.Painting;
-            ToolManager.toolmanagerSc.SetMopActive(true);
+            ToolManager.Instance.SetMopActive(true);
         }
-        if(ToolManager.toolmanagerSc.silicon_gun != null)
+        if(ToolManager.Instance.silicon_gun != null)
         {
-            ToolManager.toolmanagerSc.SetGunActive(true);
+            ToolManager.Instance.SetGunActive(true);
             GameManager.state = GameManager.GameStates.Siliconing;
         }
         

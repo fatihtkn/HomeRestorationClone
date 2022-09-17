@@ -2,18 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToolManager : MonoBehaviour
+public class ToolManager :MonoSingleton<ToolManager>
 {
     public GameObject mop;
     public GameObject silicon_gun;
     public GameObject paintbrush;
-    public static ToolManager toolmanagerSc;
-
-    private void Start()
-    {
-        toolmanagerSc = GetComponent<ToolManager>();
-    }
-
+    
     public void SetMopActive(bool control)
     {
         if (mop != null)

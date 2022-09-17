@@ -2,22 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Foam : MonoBehaviour
+public class Foam : MonoBehaviour,IOnPainted
 {
     [SerializeField] private LayerMask mask;
-    [SerializeField] private Texture2D transparentTex;
+    private IRayProvider rayProvider;
     public Vector3 gunOffset;
-    private Vector3 swipeDelta, startTouch;
     public Collider mouseTarget;
     float count;
-    
-       
-        
-
-
-    private void Start()
+    private void Awake()
     {
-        count = 0;
+        rayProvider = new MouseScreenRayProvider();
     }
     private void Update()
     {
@@ -28,52 +22,27 @@ public class Foam : MonoBehaviour
     {
         if (GameManager.state == GameManager.GameStates.Siliconing)
         {
-           
-
             
-            
-            if (Input.GetMouseButtonDown(0))
-            {
-                startTouch = Input.mousePosition;
-            }
-            else if (Input.GetMouseButton(0))
-            {
-                swipeDelta = Input.mousePosition - startTouch;
-                startTouch = Input.mousePosition;
                 
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit hit, mask)!=false /*& swipeDelta.sqrMagnitude > 1*/)
+            if (Physics.Raycast(rayProvider.CreateRay(), out RaycastHit hit, mask))
+            {
+
+                ToolManager.Instance.silicon_gun.transform.position = hit.point+gunOffset;
+                if (hit.collider.CompareTag("Silicon"))
                 {
-
-                    ToolManager.toolmanagerSc.silicon_gun.transform.position = hit.point+gunOffset;
-                    if (hit.collider.CompareTag("Silicon"))
-                    {
-                        hit.collider.gameObject.GetComponent<MeshRenderer>().enabled = true;
-                        hit.collider.enabled = false;
-                        count++;
-                    }
-                    
-                    //GameObject obj = Instantiate(sphere, hit.point, Quaternion.identity);
-                    //obj.transform.SetParent(parent);
-
+                    hit.collider.gameObject.GetComponent<MeshRenderer>().enabled = true;
+                    hit.collider.enabled = false;
+                    count++;
                 }
-
-            }
-            if (Input.GetMouseButtonUp(0))
-            {
-                swipeDelta = Vector3.zero;
-                startTouch = Vector3.zero;
                 
-
+               
 
             }
+
+            
             if (count >= 94)
             {
-
-                ConfettiManager.confettiSc.CreateConfetti();
-                ButtonFunctionsController.buttonManager.setToPlasterButton.SetActive(true);
-                ToolManager.toolmanagerSc.SetGunActive(false);
-                mouseTarget.enabled = false;
-                count = 0;
+                OnPainted();
 
             }
             ProgressBar.progressbarSc.SetBar(count/100);
@@ -88,15 +57,13 @@ public class Foam : MonoBehaviour
 
     }
 
-    private IEnumerator CoolDown()
+   
+
+    public void OnPainted()
     {
-        
-
-        yield return new WaitForSeconds(2f);
-        
-
-
+        ConfettiManager.Instance.CreateConfetti();
+        ButtonFunctionsManager.Instance.SetToPlasterButton.SetActive(true);
+        ToolManager.Instance.SetGunActive(false);
+        mouseTarget.enabled = false;
     }
-
-
 }

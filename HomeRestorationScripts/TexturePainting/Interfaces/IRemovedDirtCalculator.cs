@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IRemovedDirtCalculator 
 {
-    public float RemovedDirtCalculate(float removedAmount, float totalAmount);
+     float RemovedDirtCalculate(float removedAmount, float totalAmount);
 }
